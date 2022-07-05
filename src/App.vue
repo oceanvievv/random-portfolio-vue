@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="container">
-    <div class="content-wrapper">
-      <PersonProfile />
-    </div>
+    <HomeView />
   </div>
 </template>
 
@@ -40,8 +38,9 @@ body {
 }
 </style>
 <script>
-import PersonProfile from "@/components/PersonProfile/PersonProfile";
+import HomeView from "@/views/HomeView";
+
 export default {
-  components: { PersonProfile },
+  components: { HomeView },
 };
 </script>
