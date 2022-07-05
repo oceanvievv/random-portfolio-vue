@@ -1,0 +1,36 @@
+@import "@/styles/consts/consts";
+
+.skill__title {
+  display: block;
+
+  font-size: 16px;
+  line-height: 20px;
+
+  min-width: 30%;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  @media screen and (max-width: 375px) {
+    overflow: unset;
+    white-space: unset;
+    text-overflow: unset;
+  }
+}
+.skill__progress-bar-wrapper {
+  width: 100%;
+  height: 10px;
+
+  background-color: $background-color-dark-gray;
+
+  border-radius: 12px;
+
+  .skill__progress-bar {
+    height: 10px;
+
+    background-color: $background-color-blue;
+
+    border-radius: 12px;
+  }
+}

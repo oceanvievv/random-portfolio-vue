@@ -31,3 +31,29 @@
     }
   }
 }
+.person-additional-info {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  gap: 35px;
+
+  @media screen and (max-width: 947px) {
+    flex-direction: column;
+  }
+}
+.info__left-column, .info__right-column {
+  display: flex;
+  flex-direction: column;
+
+  gap: 42px;
+}
+.info__left-column {
+  width: 100%;
+  max-width: 415px;
+
+  @media screen and (max-width: 947px) {
+    max-width: 100%;
+  }
+}
