@@ -1,6 +1,8 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div id="app" class="container">
+    <div class="content-wrapper">
+      <PersonProfile />
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,9 @@
 
 // Consts
 @import "@/styles/consts/consts";
+
+// Containers
+@import "@/styles/base/container";
 
 body {
   font-family: "MontserratMedium", sans-serif;
@@ -34,3 +39,9 @@ body {
   }
 }
 </style>
+<script>
+import PersonProfile from "@/components/PersonProfile/PersonProfile";
+export default {
+  components: { PersonProfile },
+};
+</script>
