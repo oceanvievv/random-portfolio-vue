@@ -6,6 +6,14 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+const projectTitle = "Portfolio";
+
+router.afterEach(() => {
+  Vue.nextTick(() => {
+    document.title = projectTitle;
+  });
+});
+
 new Vue({
   router,
   store,
