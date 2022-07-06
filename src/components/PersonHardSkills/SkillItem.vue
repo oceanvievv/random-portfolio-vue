@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "skill-item";
+@import "@/components/PersonHardSkills/skill-item";
 </style>

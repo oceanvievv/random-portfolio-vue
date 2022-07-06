@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import SkillItem from "@/components/HardSkills/SkillItem";
+import SkillItem from "@/components/PersonHardSkills/SkillItem";
 
 export default {
-  name: "HardSkills",
+  name: "PersonHardSkills",
   components: {
     SkillItem,
   },
@@ -40,5 +40,5 @@ export default {
 // Container shadow
 @import "@/styles/base/bottom-middle-shadow.scss";
 
-@import "hard-skills";
+@import "@/components/PersonHardSkills/person-hard-skills";
 </style>
