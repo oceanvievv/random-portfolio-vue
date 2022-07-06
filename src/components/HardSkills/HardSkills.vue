@@ -1,8 +1,10 @@
 <template>
   <div class="hard-skills-wrapper bottom-middle-shadow">
     <div class="hard-skills__title">FRONT END</div>
-    <div class="skills-wrapper" v-for="(skill, idx) in skills" :key="idx">
+    <div class="hard-skills-list-wrapper">
       <SkillItem
+        v-for="(skill, idx) in skills"
+        :key="idx"
         v-bind:progress-bar-title="skill.title"
         v-bind:progress-bar-value="skill.value"
       ></SkillItem>
