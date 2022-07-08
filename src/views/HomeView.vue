@@ -3,25 +3,32 @@
     <PersonProfile />
     <div class="person-additional-info">
       <div class="info__left-column">
-        <HardSkills />
+        <PersonHardSkills />
         <PersonHobbies />
       </div>
-      <div class="info__right-column"></div>
+      <div class="info__right-column">
+        <PersonArticles />
+        <PersonExperiences />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import PersonProfile from "@/components/PersonProfile/PersonProfile";
-import HardSkills from "@/components/PersonHardSkills/PersonHardSkills";
+import PersonHardSkills from "@/components/PersonHardSkills/PersonHardSkills";
 import PersonHobbies from "@/components/PersonHobbies/PersonHobbies";
+import PersonArticles from "@/components/PersonArticle/PersonArticles";
+import PersonExperiences from "@/components/PersonExperiences/PersonExperiences";
 
 export default {
   name: "HomeView",
   components: {
+    PersonArticles,
     PersonProfile,
-    HardSkills,
+    PersonHardSkills,
     PersonHobbies,
+    PersonExperiences,
   },
 };
 </script>
