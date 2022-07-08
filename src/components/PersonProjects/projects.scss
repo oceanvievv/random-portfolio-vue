@@ -1,0 +1,59 @@
+@import "filter-button";
+@import "project-button";
+@import "pagination-controls";
+@import "project";
+
+.projects-section-wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 36px;
+
+  margin-bottom: 147px;
+}
+.projects-nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  padding: 22px;
+  border-radius: $section-container-radius;
+  box-sizing: border-box;
+
+  background-color: $background-color-white;
+
+  .projects-nav__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .projects-nav__filters-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    gap: 16px;
+  }
+}
+.projects-wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: space-between;
+}
+.projects-pagination {
+  width: 100%;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+.projects-pagination__controls {
+  display: flex;
+  flex-flow: row nowrap;
+
+  gap: 12px;
+}

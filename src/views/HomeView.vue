@@ -11,6 +11,7 @@
         <PersonExperiences />
       </div>
     </div>
+    <PersonProjects />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import PersonHardSkills from "@/components/PersonHardSkills/PersonHardSkills";
 import PersonHobbies from "@/components/PersonHobbies/PersonHobbies";
 import PersonArticles from "@/components/PersonArticle/PersonArticles";
 import PersonExperiences from "@/components/PersonExperiences/PersonExperiences";
+import PersonProjects from "@/components/PersonProjects/PersonProjects";
 
 export default {
   name: "HomeView",
@@ -29,6 +31,7 @@ export default {
     PersonHardSkills,
     PersonHobbies,
     PersonExperiences,
+    PersonProjects,
   },
 };
 </script>
