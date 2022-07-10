@@ -59,5 +59,5 @@ export default {
 // Container shadow
 @import "@/styles/base/bottom-middle-shadow.scss";
 
-@import "person-profile";
+@import "css/person-profile";
 </style>

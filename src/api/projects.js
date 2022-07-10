@@ -10,10 +10,8 @@ async function fetchProjects() {
     response = { data: [] };
   }
 
-  console.log(response);
-
   return {
-    response,
+    projects: response.data,
   };
 }
 

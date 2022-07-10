@@ -50,5 +50,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/PersonHobbies/person-hobbies";
+@import "@/components/PersonHobbies/css/person-hobbies";
 </style>

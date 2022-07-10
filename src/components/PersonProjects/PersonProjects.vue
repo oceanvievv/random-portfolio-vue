@@ -1,7 +1,7 @@
 <template>
   <div class="projects-section-wrapper">
     <div class="projects-nav">
-      <div class="projects-nav__title">{{ projects }}</div>
+      <div class="projects-nav__title">Projects</div>
     </div>
   </div>
 </template>
@@ -20,5 +20,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "projects";
+@import "css/projects";
 </style>

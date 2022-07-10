@@ -22,5 +22,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/components/PersonArticle/person-articles.scss";
+@import "@/components/PersonArticle/css/person-articles.scss";
 </style>
