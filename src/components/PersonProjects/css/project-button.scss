@@ -37,12 +37,12 @@
     }
   }
 }
-.active-link-button {
+.colored {
   background: $background-color-blue;
   border-color: transparent;
   color: white;
 }
-.code-link-button {
+.not-colored {
   color: $button-text-color-blue;
   border-color: $button-border-color-blue;
 }
