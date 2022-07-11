@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://retoolapi.dev/PDq2jR/",
+  baseURL: "https://retoolapi.dev/CpgSCW/",
   timeout: 5000,
 });
 

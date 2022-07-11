@@ -37,12 +37,18 @@
     }
   }
 }
-.colored {
+.colored, .active {
   background: $background-color-blue;
-  border-color: transparent;
+  border-color: transparent !important;
   color: white;
 }
 .not-colored {
   color: $button-text-color-blue;
   border-color: $button-border-color-blue;
+}
+.disabled {
+  opacity: 0.5;
+  border: none;
+
+  cursor: default;
 }

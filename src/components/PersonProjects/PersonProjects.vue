@@ -1,12 +1,13 @@
 <template>
   <div class="projects-section-wrapper">
     <div class="projects-nav">
-      <div class="projects-nav__title">Projects ({{ projects.length }})</div>
+      <div class="projects-nav__title">Projects ({{ projectsCount }})</div>
       <div class="projects-nav__filters-wrapper">
         <div
           class="projects-nav__filter"
           v-for="(tag, idx) in uniqueTags"
           :key="idx"
+          @click="filterProjects(tag)"
         >
           {{ tag }}
         </div>
@@ -15,22 +16,14 @@
     <div class="projects-wrapper">
       <div
         class="project-wrapper bottom-middle-shadow"
-        v-for="(project, idx) in projects"
+        v-for="(project, idx) in currItems"
         :key="idx"
       >
         <div class="project__image-wrapper">
           <img v-bind:src="project.imgLink" v-bind:alt="project.title" />
         </div>
         <div class="project__info">
-          <div class="project__tags">
-            <div
-              class="project__tag"
-              v-for="(tag, idx) in addLaticeToTag(project.tags)"
-              :key="idx"
-            >
-              {{ tag }}
-            </div>
-          </div>
+          <!-- TODO: Bring back project's tags -->
           <div class="project__title">{{ project.title }}</div>
           <div class="project__descr">{{ project.descr }}</div>
           <div class="project__links">
@@ -50,20 +43,58 @@
         </div>
       </div>
     </div>
+    <div class="projects-pagination" v-if="projectsCount > 3">
+      <div class="projects-pagination__controls">
+        <div
+          :class="{ disabled: this.currPage === 1 }"
+          class="projects-pagination__page-control-wrapper projects-pagination__page-control-wrapper_left"
+          @click="handleArrowControls('prev')"
+        >
+          <PersonProjectsPaginationArrow />
+        </div>
+        <div
+          class="projects-pagination__page-control-wrapper"
+          v-for="idx in pagesCount"
+          :key="idx"
+          :class="{ active: colorPageButton(idx) }"
+          @click="updateCurrItems(idx)"
+        >
+          {{ idx }}
+        </div>
+        <div
+          :class="{ disabled: this.currPage === this.pagesCount }"
+          class="projects-pagination__page-control-wrapper"
+          @click="handleArrowControls('next')"
+        >
+          <PersonProjectsPaginationArrow />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+// API
 import { fetchProjects } from "@/api";
-import { getUniqueTags } from "@/components/PersonProjects/js/tags";
-import { addLaticeToTag } from "@/components/PersonProjects/js/tags";
+
+// Helpers
+import Paginator from "@/components/PersonProjects/js/pagination";
+import Filterator from "@/components/PersonProjects/js/filter";
+import { getUniqueTags } from "@/components/PersonProjects/js/filter";
+
+// Components
+import PersonProjectsPaginationArrow from "@/components/PersonProjects/elements/PersonProjectsPaginationArrow";
 
 export default {
   name: "PersonProjects",
+  components: { PersonProjectsPaginationArrow },
   data() {
     return {
-      projects: [],
-      uniqueTags: null,
+      allProjects: [],
+      projectsCount: 0,
+      currPage: 1,
+      currItems: [],
+      uniqueTags: [],
     };
   },
   created() {
@@ -79,12 +110,50 @@ export default {
         console.error(e);
       }
 
-      this.projects = response.projects;
-      // TODO: remove this line
-      this.projects.splice(3);
-      this.uniqueTags = getUniqueTags(this.projects);
+      this.allProjects = response.projects;
+      this.uniqueTags = getUniqueTags(response.projects);
+      this.uniqueTags.push("React");
+      this.filterator = new Filterator(this.uniqueTags, response.projects);
+      this.hashedTags = this.filterator.hashedTags;
+      this.pagination = new Paginator(response.projects);
+      this.projectsCount = this.pagination.projectsCount;
+      this.pagesCount = Math.ceil(this.projectsCount / 3);
+      this.currPage = this.pagination.currPage;
+      this.currItems = this.pagination.currItems;
     },
-    addLaticeToTag,
+    updateCurrItems(page) {
+      this.currPage = page;
+      this.pagination.currPage = page;
+      this.currItems = this.pagination.currItems;
+    },
+    handleArrowControls(action) {
+      const currPage = this.currPage;
+
+      if (action === "prev" && currPage !== 1) {
+        this.currPage--;
+        this.pagination.currPage--;
+        this.currItems = this.pagination.currItems;
+      } else if (action === "next" && currPage !== this.pagesCount) {
+        this.currPage++;
+        this.pagination.currPage++;
+        this.currItems = this.pagination.currItems;
+      }
+    },
+    colorPageButton(page) {
+      return page === this.pagination.currPage;
+    },
+    filterProjects(filter) {
+      const filteredProjects = [];
+
+      for (let i = 0; i < this.allProjects.length; i++) {
+        if (this.allProjects[i].tags.includes(filter))
+          filteredProjects.push(this.allProjects[i]);
+      }
+
+      this.pagination.updateAllProjects(filteredProjects);
+      this.projectsCount = this.pagination.projectsCount;
+      this.currItems = this.pagination.currItems;
+    },
   },
 };
 </script>
