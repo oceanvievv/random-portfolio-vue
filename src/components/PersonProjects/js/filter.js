@@ -25,10 +25,10 @@ class Filterator {
     return tags.map((tag) => "#" + tag);
   }
 
-  filterProjects(filter) {
-    console.log(this.allProjects);
-    console.log(filter);
-  }
+  // filterProjects(filter) {
+  //   console.log(this.allProjects);
+  //   console.log(filter);
+  // }
 }
 
 export default Filterator;

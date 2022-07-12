@@ -4,10 +4,11 @@
       <div class="projects-nav__title">Projects ({{ projectsCount }})</div>
       <div class="projects-nav__filters-wrapper">
         <div
+          :class="{ active: currFilters.includes(tag) }"
           class="projects-nav__filter"
           v-for="(tag, idx) in uniqueTags"
           :key="idx"
-          @click="filterProjects(tag)"
+          @click="handleFilterAction(tag)"
         >
           {{ tag }}
         </div>
@@ -79,8 +80,9 @@ import { fetchProjects } from "@/api";
 
 // Helpers
 import Paginator from "@/components/PersonProjects/js/pagination";
-import Filterator from "@/components/PersonProjects/js/filter";
-import { getUniqueTags } from "@/components/PersonProjects/js/filter";
+import Filterator, {
+  getUniqueTags,
+} from "@/components/PersonProjects/js/filter";
 
 // Components
 import PersonProjectsPaginationArrow from "@/components/PersonProjects/elements/PersonProjectsPaginationArrow";
@@ -94,6 +96,7 @@ export default {
       projectsCount: 0,
       currPage: 1,
       currItems: [],
+      currFilters: [],
       uniqueTags: [],
     };
   },
@@ -142,17 +145,33 @@ export default {
     colorPageButton(page) {
       return page === this.pagination.currPage;
     },
-    filterProjects(filter) {
-      const filteredProjects = [];
-
-      for (let i = 0; i < this.allProjects.length; i++) {
-        if (this.allProjects[i].tags.includes(filter))
-          filteredProjects.push(this.allProjects[i]);
+    // filterProjects(filter) {
+    //   this.handleFilterAction(filter);
+    //
+    //   console.log("Currently applied filters: ", this.currFilters);
+    //
+    //   const filteredProjects = [];
+    //
+    //   for (let i = 0; i < this.allProjects.length; i++) {
+    //     if (this.allProjects[i].tags.includes(filter))
+    //       filteredProjects.push(this.allProjects[i]);
+    //   }
+    //
+    //   console.log("Filtered projects: ", filteredProjects);
+    //
+    //   this.pagination.updateAllProjects(filteredProjects);
+    //   this.projectsCount = this.pagination.projectsCount;
+    //   this.currItems = this.pagination.currItems;
+    // },
+    handleFilterAction(filter) {
+      if (!this.currFilters.includes(filter)) {
+        this.currFilters.push(filter);
+      } else {
+        const idx = this.currFilters.indexOf(filter);
+        this.currFilters.splice(idx, 1);
       }
 
-      this.pagination.updateAllProjects(filteredProjects);
-      this.projectsCount = this.pagination.projectsCount;
-      this.currItems = this.pagination.currItems;
+      console.log("Currently applied filters: ", this.currFilters);
     },
   },
 };
