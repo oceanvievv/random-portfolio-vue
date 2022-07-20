@@ -11,6 +11,19 @@
           alt="Article preview"
         />
       </div>
+      <div class="articles__brief">
+        <p>
+          In this article I tell the story about Proin eu justo sit amet lacus
+          bibendum tincidunt. Vivamus non volutpat nisl, a luctus mi.
+        </p>
+        <p>
+          Donec aliquam est dui, vel vestibulum diam sollicitudin id. Quisque
+          feugiat malesuada molestie.
+        </p>
+      </div>
+      <div class="articles__article-link">
+        <a href="#">dev.to</a>
+      </div>
     </div>
   </div>
 </template>
