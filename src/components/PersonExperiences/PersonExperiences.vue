@@ -8,7 +8,7 @@
         </div>
         <div class="experience__info">
           <div class="experience__date">
-            {{ exp.dateFrom + " " + exp.dateTo }}
+            {{ exp.dateFrom + " - " + exp.dateTo }}
           </div>
           <div class="experience__position">
             {{ exp.position }}
