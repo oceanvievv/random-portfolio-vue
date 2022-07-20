@@ -16,19 +16,24 @@ export function getAllTags(projects) {
 
 class Filterator {
   constructor(uniqueTags, allProjects) {
-    this.uniqueTags = uniqueTags;
-    this.hashedTags = this.addHashToTag(uniqueTags);
     this.allProjects = allProjects;
   }
 
-  addHashToTag(tags) {
-    return tags.map((tag) => "#" + tag);
+  checkAvailability(arr, val) {
+    return arr.some((arrVal) => val === arrVal);
   }
 
-  // filterProjects(filter) {
-  //   console.log(this.allProjects);
-  //   console.log(filter);
-  // }
+  getFilteredProjects(filters = []) {
+    const filteredProjects = this.allProjects.filter((item) => {
+      const itemTags = getAllTags([item]);
+
+      for (let i = 0; i < filters.length; i++) {
+        if (this.checkAvailability(itemTags, filters[i])) return true;
+      }
+    });
+
+    return filteredProjects.length > 0 ? filteredProjects : [];
+  }
 }
 
 export default Filterator;

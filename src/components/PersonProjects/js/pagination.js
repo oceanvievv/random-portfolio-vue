@@ -40,7 +40,6 @@ class Paginator {
     this.projectsCount = newProjects.length;
     this.pages = this.generatePages(newProjects);
     this.state.currPage = 1;
-    this.state.currItems = this.currItems;
   }
 }
 

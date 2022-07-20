@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <div class="projects-wrapper">
+    <div class="projects-wrapper" v-if="projectsCount > 0">
       <div
         class="project-wrapper bottom-middle-shadow"
         v-for="(project, idx) in currItems"
@@ -24,7 +24,15 @@
           <img v-bind:src="project.imgLink" v-bind:alt="project.title" />
         </div>
         <div class="project__info">
-          <!-- TODO: Bring back project's tags -->
+          <div class="project__tags">
+            <div
+              class="project__tag"
+              v-for="(tag, idx) in addHashToTags(project.tags)"
+              :key="idx"
+            >
+              {{ tag }}
+            </div>
+          </div>
           <div class="project__title">{{ project.title }}</div>
           <div class="project__descr">{{ project.descr }}</div>
           <div class="project__links">
@@ -43,6 +51,18 @@
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class="projects-wrapper_empty"
+      v-if="(projectsCount === 0) & (isLoading === false)"
+    >
+      Nothing found :(
+    </div>
+    <div
+      class="projects-wrapper_loading"
+      v-if="(projectsCount === 0) & (isLoading === true)"
+    >
+      <AppLoader />
     </div>
     <div class="projects-pagination" v-if="projectsCount > 3">
       <div class="projects-pagination__controls">
@@ -86,12 +106,14 @@ import Filterator, {
 
 // Components
 import PersonProjectsPaginationArrow from "@/components/PersonProjects/elements/PersonProjectsPaginationArrow";
+import AppLoader from "@/components/Base/AppLoader";
 
 export default {
   name: "PersonProjects",
-  components: { PersonProjectsPaginationArrow },
+  components: { AppLoader, PersonProjectsPaginationArrow },
   data() {
     return {
+      isLoading: true,
       allProjects: [],
       projectsCount: 0,
       currPage: 1,
@@ -101,10 +123,13 @@ export default {
     };
   },
   created() {
-    this.getProjects();
+    setTimeout(() => {
+      this.getProjects().then(() => (this.isLoading = false));
+    }, 1000);
   },
   methods: {
     async getProjects() {
+      this.isLoading = true;
       let response;
 
       try {
@@ -117,7 +142,6 @@ export default {
       this.uniqueTags = getUniqueTags(response.projects);
       this.uniqueTags.push("React");
       this.filterator = new Filterator(this.uniqueTags, response.projects);
-      this.hashedTags = this.filterator.hashedTags;
       this.pagination = new Paginator(response.projects);
       this.projectsCount = this.pagination.projectsCount;
       this.pagesCount = Math.ceil(this.projectsCount / 3);
@@ -128,6 +152,13 @@ export default {
       this.currPage = page;
       this.pagination.currPage = page;
       this.currItems = this.pagination.currItems;
+    },
+    resetAll() {
+      this.currPage = 1;
+      this.pagination.currPage = 1;
+      this.pagination.updateAllProjects(this.allProjects);
+      this.currItems = this.pagination.currItems;
+      this.updateProjectsCount();
     },
     handleArrowControls(action) {
       const currPage = this.currPage;
@@ -145,33 +176,31 @@ export default {
     colorPageButton(page) {
       return page === this.pagination.currPage;
     },
-    // filterProjects(filter) {
-    //   this.handleFilterAction(filter);
-    //
-    //   console.log("Currently applied filters: ", this.currFilters);
-    //
-    //   const filteredProjects = [];
-    //
-    //   for (let i = 0; i < this.allProjects.length; i++) {
-    //     if (this.allProjects[i].tags.includes(filter))
-    //       filteredProjects.push(this.allProjects[i]);
-    //   }
-    //
-    //   console.log("Filtered projects: ", filteredProjects);
-    //
-    //   this.pagination.updateAllProjects(filteredProjects);
-    //   this.projectsCount = this.pagination.projectsCount;
-    //   this.currItems = this.pagination.currItems;
-    // },
     handleFilterAction(filter) {
       if (!this.currFilters.includes(filter)) {
         this.currFilters.push(filter);
       } else {
         const idx = this.currFilters.indexOf(filter);
         this.currFilters.splice(idx, 1);
+
+        if (this.currFilters.length === 0) {
+          this.updateCurrItems(this.pagination.currPage);
+          this.resetAll();
+          return;
+        }
       }
 
-      console.log("Currently applied filters: ", this.currFilters);
+      this.pagination.updateAllProjects(
+        this.filterator.getFilteredProjects(this.currFilters)
+      );
+      this.updateCurrItems(this.pagination.currPage);
+      this.updateProjectsCount();
+    },
+    updateProjectsCount() {
+      this.projectsCount = this.pagination.projectsCount;
+    },
+    addHashToTags(tags) {
+      return tags.split(", ").map((tag) => "#" + tag);
     },
   },
 };
