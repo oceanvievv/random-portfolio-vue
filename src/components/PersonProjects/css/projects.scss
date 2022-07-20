@@ -32,8 +32,12 @@
   .projects-nav__filters-wrapper {
     display: flex;
     flex-direction: row;
+    overflow: scroll;
 
     gap: 16px;
+  }
+  .projects-nav__filters-wrapper::-webkit-scrollbar {
+    display: none;
   }
 }
 .projects-wrapper {
@@ -43,6 +47,20 @@
   flex-flow: row nowrap;
 
   justify-content: space-between;
+
+  @media screen and (max-width: 1110px) {
+    gap: 36px;
+    flex-flow: column nowrap;
+  }
+
+  &_empty {
+    font-size: 18px;
+    line-height: 22px;
+
+    align-self: center;
+
+    margin-top: 20px;
+  }
 }
 .projects-pagination {
   width: 100%;
@@ -50,6 +68,10 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
+
+  @media screen and (max-width: 475px) {
+    justify-content: center;
+  }
 }
 .projects-pagination__controls {
   display: flex;
