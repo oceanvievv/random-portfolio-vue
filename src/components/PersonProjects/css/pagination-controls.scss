@@ -27,7 +27,7 @@
     transform: rotateY(180deg);
   }
 
-  @media  (hover: hover) {
+  @media (hover: hover) {
     &:hover {
       border: 1px solid $button-border-color-blue;
     }
