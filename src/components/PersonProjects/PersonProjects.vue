@@ -18,6 +18,7 @@
       <div
         class="project-wrapper bottom-middle-shadow"
         v-for="(project, idx) in currItems"
+        :ref="idx === 0 ? 'first' : null"
         :key="idx"
       >
         <div class="project__image-wrapper">
@@ -167,10 +168,12 @@ export default {
         this.currPage--;
         this.pagination.currPage--;
         this.currItems = this.pagination.currItems;
+        this.scrollToElement();
       } else if (action === "next" && currPage !== this.pagesCount) {
         this.currPage++;
         this.pagination.currPage++;
         this.currItems = this.pagination.currItems;
+        this.scrollToElement();
       }
     },
     colorPageButton(page) {
@@ -201,6 +204,13 @@ export default {
     },
     addHashToTags(tags) {
       return tags.split(", ").map((tag) => "#" + tag);
+    },
+    scrollToElement() {
+      const [el] = this.$refs.first;
+      console.log(el);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     },
   },
 };
