@@ -27,14 +27,9 @@
     transform: rotateY(180deg);
   }
 
-  &:hover {
-    background-color: $background-color-blue;
-    border-color: transparent;
-
-    color: white;
-
-    svg {
-      fill: white;
+  @media  (hover: hover) {
+    &:hover {
+      border: 1px solid $button-border-color-blue;
     }
   }
 }
